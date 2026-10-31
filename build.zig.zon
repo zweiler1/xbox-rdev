@@ -8,6 +8,10 @@
             .url = "git+https://github.com/zweiler2/nxdk_zig#63fa287f9c6397161e2c5d078ed5ff5a4897311f",
             .hash = "nxdk_zig-0.0.1-BbFuWaoVCQC6No6W427vvApjTElfWJQ4JEA0oMIwzOQQ",
         },
+        .raylib_zig = .{
+            .url = "git+https://github.com/zweiler1/raylib-zig?ref=xbox#97f7b7a895ec1f5f84f82a6f3c31e7e6ceb8c698",
+            .hash = "raylib_zig-6.2.0-KE8REH-aBQBbdOQSbISAF5RoqUl5vZa9uslrgWnXilZu",
+        },
     },
     .paths = .{
         "build.zig",

@@ -7,12 +7,19 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
         .lto = null,
     });
+    const raylib_dep = b.dependency("raylib_zig", .{
+        .optimize = optimize,
+        .platform = .xbox,
+    });
     const lib = b.addModule("root", .{
         .root_source_file = b.path("src/lib/root.zig"),
         .target = b.resolveTargetQuery(nxdk_zig.target_query),
         .optimize = optimize,
+        .imports = &.{
+            .{ .name = "raygui", .module = raylib_dep.module("raygui") },
+        },
     });
-    try buildXbox(b, optimize, nxdk_dep, lib);
+    try buildXbox(b, optimize, nxdk_dep, raylib_dep, lib);
 
     try buildPc(b, optimize);
 }
@@ -21,10 +28,13 @@ fn buildXbox(
     b: *std.Build,
     optimize: std.builtin.Optimize,
     nxdk_dep: *std.Build.Dependency,
+    raylib_dep: *std.Build.Dependency,
     lib: *std.Build.Module,
 ) !void {
     const exe = try nxdk_zig.createExe(nxdk_dep, b, optimize, "xbox_rdev", b.path("src/xbox/main.zig"), null, &.{
         .{ .name = "xbox_rdev", .module = lib },
+        .{ .name = "raylib", .module = raylib_dep.module("raylib") },
+        .{ .name = "raygui", .module = raylib_dep.module("raygui") },
     });
     const conversion = try nxdk_zig.convertExeToXboxExe(nxdk_dep, b, optimize, &exe.step, exe, "xbox");
     const create_xiso = try nxdk_zig.createXISO(nxdk_dep, b, optimize, conversion.step, exe.name, conversion.dir_path, "xbox");
