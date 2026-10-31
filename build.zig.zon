@@ -1,0 +1,17 @@
+.{
+    .name = .xbox_rdev,
+    .version = "0.0.1",
+    .fingerprint = 0x3074791f3d6f4045, // Changing this has security and trust implications.
+    .minimum_zig_version = "0.17.0",
+    .dependencies = .{
+        .nxdk_zig = .{
+            .url = "git+https://github.com/zweiler2/nxdk_zig#63fa287f9c6397161e2c5d078ed5ff5a4897311f",
+            .hash = "nxdk_zig-0.0.1-BbFuWaoVCQC6No6W427vvApjTElfWJQ4JEA0oMIwzOQQ",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
